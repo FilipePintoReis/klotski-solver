@@ -1,0 +1,36 @@
+{
+  "name": "@klotski/webapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prestart": "yarn install",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "publish-to-git"
+  },
+  "dependencies": {
+    "@klotski/logic": "file:../logic",
+    "konva": "^3.2.3",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-konva": "^16.8.6",
+    "react-loading": "^2.0.3",
+    "react-scripts": "2.1.8",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.86.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "publish-to-git": "^1.1.7"
+  }
+}

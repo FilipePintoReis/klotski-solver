@@ -1,0 +1,32 @@
+{
+  "name": "iart-klotski",
+  "version": "0.1.0",
+  "description": "Klotski game for IART classes",
+  "repository": "https://github.com/mariosantosprivate/IART-Klotski.git",
+  "private": true,
+  "scripts": {
+    "prestart": "yarn clean && yarn install",
+    "logic": "yarn clean && yarn install && cd src/logic && yarn build && cd lib && node ./index.js --stack-size=5000",
+    "start": "cd src/view && yarn start",
+    "pretest": "yarn clean && yarn install",
+    "test": "cd src/logic && yarn test --watch",
+    "test:dev": "cd src/logic && yarn test",
+    "clean": "rm -rf node_modules yarn.lock src/*/node_modules src/*/yarn.lock src/*/lib",
+    "deploy": "cd src/view && yarn deploy"
+  },
+  "workspaces": [
+    "src/logic",
+    "src/models",
+    "src/view"
+  ],
+  "devDependencies": {
+    "eslint": "5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.16.4",
+    "regenerator-runtime": "^0.13.1",
+    "eslint-plugin-jest": "^22.4.1"
+  }
+}
