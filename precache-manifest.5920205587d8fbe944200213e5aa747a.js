@@ -56,16 +56,16 @@ self.__precacheManifest = [
     "url": "/klotski-solver/static/media/icons.8e3c7f55.eot"
   },
   {
+    "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
+    "url": "/klotski-solver/static/media/icons.b87b9ba5.ttf"
+  },
+  {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
     "url": "/klotski-solver/static/media/brand-icons.13db00b7.eot"
   },
   {
     "revision": "c5ebe0b32dc1b5cc449a76c4204d13bb",
     "url": "/klotski-solver/static/media/brand-icons.c5ebe0b3.ttf"
-  },
-  {
-    "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
-    "url": "/klotski-solver/static/media/icons.b87b9ba5.ttf"
   },
   {
     "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
@@ -80,7 +80,7 @@ self.__precacheManifest = [
     "url": "/klotski-solver/static/css/2.820e8721.chunk.css"
   },
   {
-    "revision": "468592d69aae3a103181f6518f10eff1",
+    "revision": "d7ca26c213c29711dafb9cd62c1bceec",
     "url": "/klotski-solver/index.html"
   }
 ];
