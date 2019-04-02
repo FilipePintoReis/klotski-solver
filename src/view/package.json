@@ -2,13 +2,15 @@
   "name": "@klotski/webapp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mpcmarques.github.io/klotski-solver/",
   "scripts": {
     "prestart": "yarn install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "publish-to-git"
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@klotski/logic": "file:../logic",
@@ -31,6 +33,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "publish-to-git": "^1.1.7"
+    "gh-pages": "^2.0.1"
   }
 }
