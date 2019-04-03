@@ -267,9 +267,9 @@ class Klotski {
       case methods.depthFirst:
         return this.depthFirstSearch(board);
       case methods.depthLimitedSearch:
-        return this.depthLimitedSearch(board, 200);
+        return this.depthLimitedSearch(board, 100);
       case methods.iterativeDeepening:
-        return this.iterativeDeepeningDFSL(board, 700);
+        return this.iterativeDeepeningDFSL(board, 100);
       case methods.greedySearch:
         return this.greedySearch(board);
       case methods.aStar:
@@ -422,6 +422,8 @@ class Klotski {
         // 2. We filter out the nodes that have already been explored.
         for (let i = edges.length - 1; i >= 0; i--) {
           for (let j = 0; j < explored.length; j++) {
+            console.log(i);
+            console.log(edges.length);
             if (i == edges.length) i--;
             if (compareBoards(edges[i], explored[j])) {
               edges.splice(i, 1);
@@ -455,7 +457,8 @@ class Klotski {
    * @param {Int} maxDepth  - Max depth of the graph that DFS generates
    */
   iterativeDeepeningDFSL(board, maxDepth) {
-    for (let limit = 0; limit < maxDepth; limit += 1) {
+    let limit = 0;
+    for (limit; limit < maxDepth; limit += 1) {
       if (this.depthLimitedSearch(board, limit)) {
         console.log('Goal found at a depth of ', limit);
         return true;
