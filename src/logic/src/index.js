@@ -1,7 +1,7 @@
 import { Board, Maps } from '@klotski/models';
 import Klotski, { methods, cloneArrayOfBoards, cloneBoard } from './klotski';
 import removeDuplicates from './removeDuplicates';
-import { createTestBoard, createEasyBoard } from './board';
+import { createTestBoard, createEasyBoard, create21Board } from './board';
 
 /* TODO: Remove */
 const testing = () => {
@@ -24,6 +24,8 @@ testing();
 
 /* exports */
 
-export { methods, createEasyBoard, createTestBoard };
+export {
+  methods, createEasyBoard, createTestBoard, create21Board,
+};
 
 export default Klotski;

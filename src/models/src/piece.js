@@ -10,15 +10,11 @@ class Piece {
    * @param {number} width block width
    * @param {number} height block height
    */
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, color = 'blue') {
     this.x1 = x;
     this.y1 = y;
     this.width = width;
     this.height = height;
-    this.color = 'blue';
-  }
-
-  changeColorTo(color) {
     this.color = color;
   }
 

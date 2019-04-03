@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Klotski, {
   methods,
   createEasyBoard,
-  createTestBoard
+  createTestBoard,
+  create21Board
 } from "@klotski/logic";
 import {
   Container,
@@ -18,11 +19,12 @@ import Map from "./map";
 
 const maps = {
   easyMap: "easyMap",
-  test: "test"
+  test: "test",
+  easy21: "easy21"
 };
 
 const style = {
-  body: { padding: "2rem", backgroundColor: "#b2dbbf", height: "100vh" },
+  body: { padding: "2rem", backgroundColor: "#b2dbbf", minHeight: "800px" },
   header: {
     marginBottom: "5rem"
   },
@@ -68,7 +70,7 @@ class App extends React.Component {
     this.setState({ map: map });
   };
 
-  runSearch = () => {
+  runSearch = async () => {
     const { method, map } = this.state;
 
     // start loading function
@@ -83,23 +85,24 @@ class App extends React.Component {
       case maps.test:
         board = createTestBoard();
         break;
+      case maps.easy21:
+        board = create21Board();
+        break;
       default:
         break;
     }
 
     if (board === null) throw new Error("Map is null!");
 
-    game.solve(board, method);
+    const solved = game.solve(board, method);
 
-    this.setState({ loading: false, solved: true });
+    this.setState({ loading: false, solved: solved });
   };
 
   render() {
     const { loading, method, map, solved } = this.state;
 
     if (game == null) return null;
-
-    console.log(method, map);
 
     return (
       <Container fluid style={style.body}>
@@ -132,6 +135,12 @@ class App extends React.Component {
                 Iterative Search
               </Menu.Item>
               <Menu.Item
+                onClick={() => this.selectMethod(methods.depthLimitedSearch)}
+                active={method === methods.depthLimitedSearch}
+              >
+                Depth Limited Search
+              </Menu.Item>
+              <Menu.Item
                 onClick={() => this.selectMethod(methods.greedySearch)}
                 active={method === methods.greedySearch}
               >
@@ -159,7 +168,13 @@ class App extends React.Component {
                   active={map === maps.test}
                   onClick={() => this.selectMap(maps.test)}
                 >
-                  Test
+                  Map 1
+                </Menu.Item>
+                <Menu.Item
+                  active={map === maps.test}
+                  onClick={() => this.selectMap(maps.easy21)}
+                >
+                  Map 2
                 </Menu.Item>
               </Menu>
 
