@@ -7,9 +7,10 @@ const generatePieces = () => {
   const mainPiece = new Piece(0, 0, 2, 2);
   mainPiece.changeColorTo('red');
   pieces.push(mainPiece);
+  pieces.push(new Piece(0, 2, 1, 1));
   pieces.push(new Piece(1, 2, 1, 1));
   pieces.push(new Piece(2, 2, 1, 1));
-  pieces.push(new Piece(1, 3, 1, 1));
+  pieces.push(new Piece(3, 2, 1, 1));
 
   return pieces;
 };

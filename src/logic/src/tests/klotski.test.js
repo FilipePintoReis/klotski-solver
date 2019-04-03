@@ -16,7 +16,7 @@ describe('tests klotski game', () => {
 
   it('Game is solved using depth first search method.', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy1();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
@@ -30,7 +30,7 @@ describe('tests klotski game', () => {
 
   it('Game is solved using depth first search limited method.', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy1();
     const board = new Board(map);
 
     // verify game solving condition
@@ -45,7 +45,7 @@ describe('tests klotski game', () => {
 
   it('Game is solved using iterative depth first search method.', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy21();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
@@ -59,7 +59,7 @@ describe('tests klotski game', () => {
 
   it('Game is solved using greedy search and simple heuristic.', () => {
     const game = new Klotski();
-    const map = new Maps.Easy21();
+    const map = new Maps.TestMap();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);

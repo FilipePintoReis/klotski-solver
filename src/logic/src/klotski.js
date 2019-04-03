@@ -533,48 +533,63 @@ class Klotski {
     return false;
   }
 
-  aStar(rootBoard) {
-    const priorityQueue = new LowestPriorityQueue();
-    const rootNode = new NodeClass(rootBoard, [rootBoard]);
-    let f = rootNode.path.length + complexHeuristic(rootNode.board);
-    priorityQueue.enqueue(rootNode, f); // falta aqui o cálculo da heurística
- 
-    const visited = [];
- 
-    let currNode = priorityQueue.front();
-    while (!priorityQueue.isEmpty() && !currNode.element.board.hasGameEnded()) {
-      currNode = priorityQueue.dequeue();
-      if (currNode.element.board.hasGameEnded()) {
+  aStar(board) {
+    // Create a Stack and add our initial node in it
+    const rootNode = new NodeClass(board, [board]);
+    const rootH = complexHeuristic(board);
+    const rootF = rootH + 1;
+    const stack = [{ node: rootNode, heuristic: rootF }];
+
+    // Mark the first node as explored
+    const tempBoard = new Board(null);
+    cloneBoard(board, tempBoard);
+
+    let currNodeAndHeuristic = { node: new NodeClass(tempBoard, [tempBoard]), heuristic: rootF };
+
+    const explored = [currNodeAndHeuristic];
+
+    // We'll continue till our Stack gets empty
+    while (stack.length > 0) {
+      stack.sort(compareBoardsAndHeuristics);
+      // Pop the stack and select our current node
+      currNodeAndHeuristic = stack.pop();
+
+      // Check if game is over
+      if (currNodeAndHeuristic.node.board.hasGameEnded()) {
+        this.plays = currNodeAndHeuristic.node.path;
         this.solved = true;
-        this.plays = currNode.element.path;
         return true;
       }
- 
-      visited.push(currNode.element);
-      const childBoards = getAllPossibleBoards(currNode.element.board);
- 
-      const childNodes = [];
-      for (let i = 0; i < childBoards.length; i += 1) {
+
+      // 1. Get all the child nodes.
+      const edges = getAllPossibleBoards(currNodeAndHeuristic.node.board);
+      const nodesAndHeuristics = [];
+
+      // 2. Get the heuristic of each node and group {node, heuristic_value}
+      edges.forEach((possibleBoard) => {
         const pathClone = [];
-        cloneArrayOfBoards(currNode.element.path, pathClone);
-        const childNode = new NodeClass(childBoards[i], pathClone);
- 
-        f = childNode.path.length + complexHeuristic(childNode.board);
-        childNode.path.push(childBoards[i]);
-        childNodes.push(childNode);
-      }
- 
-      for (let i = 0; i < childNodes.length; i += 1) {
+        cloneArrayOfBoards(currNodeAndHeuristic.node.path, pathClone);
+        const node = new NodeClass(possibleBoard, pathClone);
+        node.path.push(possibleBoard);
+        const f = complexHeuristic(possibleBoard) + node.path.length;
+        nodesAndHeuristics.push({ node, heuristic: f });
+      });
+
+      // 4. Sort by heuristic
+      nodesAndHeuristics.sort(compareBoardsAndHeuristics);
+
+      for (let i = 0; i < nodesAndHeuristics.length; i += 1) {
         let canAdd = true;
-        for (let k = 0; k < visited.length; k += 1) {
-           if (compareBoards(childNodes[i].board, visited[k].board)) {
-          if (!(childNodes[i].path.length < visited[k].path.length)) {
-            canAdd = false;
-          }
+        for (let k = 0; k < explored.length; k += 1) {
+          if (compareBoards(nodesAndHeuristics[i].node.board, explored[k].node.board)) {
+            if (!(nodesAndHeuristics[i].node.path.length < explored[k].node.path.length)) {
+              canAdd = false;
+            }
           }
         }
         if (canAdd) {
-          priorityQueue.enqueue(childNodes[i]);
+          stack.push(nodesAndHeuristics[i]);
+          explored.push(nodesAndHeuristics[i]);
         }
       }
     }
