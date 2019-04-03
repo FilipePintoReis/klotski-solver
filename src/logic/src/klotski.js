@@ -534,7 +534,6 @@ class Klotski {
   }
 
   aStar(rootBoard) {
-    console.log('aaaaaaaaaaaaaaaa');
     const priorityQueue = new LowestPriorityQueue();
     const rootNode = new NodeClass(rootBoard, [rootBoard]);
     let f = rootNode.path.length + complexHeuristic(rootNode.board);
@@ -543,13 +542,8 @@ class Klotski {
     const visited = [];
  
     let currNode = priorityQueue.front();
-    console.log(currNode);
-    console.log('hello');
- 
     while (!priorityQueue.isEmpty() && !currNode.element.board.hasGameEnded()) {
       currNode = priorityQueue.dequeue();
-      console.log(currNode);
-      console.log('hello');
       if (currNode.element.board.hasGameEnded()) {
         this.solved = true;
         this.plays = currNode.element.path;
@@ -573,11 +567,11 @@ class Klotski {
       for (let i = 0; i < childNodes.length; i += 1) {
         let canAdd = true;
         for (let k = 0; k < visited.length; k += 1) {
-          // if (compareBoards(childNodes[i].board, visited[k].board)) {
+           if (compareBoards(childNodes[i].board, visited[k].board)) {
           if (!(childNodes[i].path.length < visited[k].path.length)) {
             canAdd = false;
           }
-          // }
+          }
         }
         if (canAdd) {
           priorityQueue.enqueue(childNodes[i]);
