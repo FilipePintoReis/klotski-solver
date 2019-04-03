@@ -25,6 +25,12 @@ export const compareBoards = (board1, board2) => {
         ) {
           return false;
         }
+        if (
+          board1.pieces[i].color !== board2.pieces[k].color
+          || board1.pieces[i].color !== board2.pieces[k].color
+        ) {
+          return false;
+        }
       }
     }
     if (!foundPiece) {

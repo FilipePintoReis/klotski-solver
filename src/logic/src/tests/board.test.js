@@ -165,7 +165,7 @@ describe('Test the board logic', () => {
 
   it('findObjectivePiece test', () => {
     const board = new Board(new Maps.Default());
-    const board1 = new Board(new Maps.GameOverMap());
+    const board1 = new Board(new Maps.TestMap());
 
     const piece1 = board.findObjectivePiece();
     const piece2 = board1.findObjectivePiece();
@@ -175,13 +175,15 @@ describe('Test the board logic', () => {
       y1: 0,
       width: 2,
       height: 2,
+      color: 'red',
     });
 
     expect(piece2).toEqual({
-      x1: 1,
-      y1: 3,
+      x1: 0,
+      y1: 0,
       width: 2,
       height: 2,
+      color: 'red',
     });
   });
 
@@ -190,6 +192,6 @@ describe('Test the board logic', () => {
     const board1 = new Board(new Maps.Easy21());
 
     console.log(compareBoards(board, board1));
-    expect(compareBoards(board, board1)).toEqual(true);
+    expect(compareBoards(board, board1)).toEqual(false);
   });
 });

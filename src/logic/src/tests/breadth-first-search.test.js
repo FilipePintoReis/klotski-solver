@@ -3,7 +3,7 @@ import Klotski, { methods } from '../klotski';
 
 it('Game is solved using breadth first method.', async () => {
   const game = new Klotski();
-  const map = new Maps.TestMap();
+  const map = new Maps.Easy1();
   const board = new Board(map);
   // verify game solving condition
   expect(game.solved).toBe(false);
