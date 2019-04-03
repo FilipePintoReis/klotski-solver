@@ -171,7 +171,7 @@ class App extends React.Component {
                   Map 1
                 </Menu.Item>
                 <Menu.Item
-                  active={map === maps.test}
+                  active={map === maps.easy21}
                   onClick={() => this.selectMap(maps.easy21)}
                 >
                   Map 2
