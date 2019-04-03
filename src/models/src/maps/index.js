@@ -8,6 +8,7 @@ import Easy2 from './easy2';
 import Easy21 from './easy21';
 import Easy1 from './easy1';
 import Easy1Mirror from './easy1mirror';
+import Hard from './hard';
 
 export default {
   Default,
@@ -20,4 +21,5 @@ export default {
   Easy21,
   Easy1,
   Easy1Mirror,
+  Hard,
 };

@@ -12,4 +12,8 @@ const createTestBoard = () => new Board(new Maps.TestMap());
 
 const create21Board = () => new Board(new Maps.Easy21());
 
-export { createEasyBoard, createTestBoard, create21Board };
+const createHardBoard = () => new Board(new Maps.Hard());
+
+export {
+  createEasyBoard, createTestBoard, create21Board, createHardBoard,
+};

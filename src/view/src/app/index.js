@@ -4,7 +4,8 @@ import Klotski, {
   methods,
   createEasyBoard,
   createTestBoard,
-  create21Board
+  create21Board,
+  createHardBoard
 } from "@klotski/logic";
 import {
   Container,
@@ -20,7 +21,8 @@ import Map from "./map";
 const maps = {
   easyMap: "easyMap",
   test: "test",
-  easy21: "easy21"
+  easy21: "easy21",
+  hard: "hard"
 };
 
 const style = {
@@ -87,6 +89,9 @@ class App extends React.Component {
         break;
       case maps.easy21:
         board = create21Board();
+        break;
+      case maps.hard:
+        board = createHardBoard();
         break;
       default:
         break;
@@ -175,6 +180,12 @@ class App extends React.Component {
                   onClick={() => this.selectMap(maps.easy21)}
                 >
                   Map 2
+                </Menu.Item>
+                <Menu.Item
+                  active={map === maps.hard}
+                  onClick={() => this.selectMap(maps.hard)}
+                >
+                  Map 3
                 </Menu.Item>
               </Menu>
 
