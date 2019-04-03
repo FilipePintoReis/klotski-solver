@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/klotski-solver/precache-manifest.2e9914d80c8c91a5f1cfa82dc1894417.js"
+  "/klotski-solver/precache-manifest.edfdf1350d5dbc86c5bbb3753273e9ec.js"
 );
 
 workbox.clientsClaim();
