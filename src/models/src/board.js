@@ -25,6 +25,10 @@ class Board {
    * @return {object} {piece: piece, canMove: bool, moves: ['left', 'right]}
    */
 
+  toString() {
+    return JSON.stringify(this.pieces);
+  }
+
   canPieceMove(piece) {
     let canMove = false;
     const moves = [];

@@ -1,4 +1,5 @@
 import { Board, Maps, Piece } from '@klotski/models';
+import { compareBoards } from '../utils';
 
 describe('Test the board logic', () => {
   it('piece can move down empty', () => {
@@ -154,11 +155,7 @@ describe('Test the board logic', () => {
     const value = board.hasGameEnded();
     expect(value).toBe(false);
 
-    console.log(board);
-
     movingPiece.movePieceRight();
-
-    console.log(board);
 
     const value1 = board.hasGameEnded();
 
@@ -186,5 +183,13 @@ describe('Test the board logic', () => {
       width: 2,
       height: 2,
     });
+  });
+
+  it('compare board pieces', () => {
+    const board = new Board(new Maps.Easy2());
+    const board1 = new Board(new Maps.Easy21());
+
+    console.log(compareBoards(board, board1));
+    expect(compareBoards(board, board1)).toEqual(true);
   });
 });
