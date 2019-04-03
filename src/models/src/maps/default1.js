@@ -9,7 +9,9 @@ const generatePieces = () => {
   pieces.push(new Piece(0, 4, 1, 1));
 
   // 1 row
-  pieces.push(new Piece(1, 0, 2, 2));
+  const mainPiece = new Piece(1, 0, 2, 2);
+  mainPiece.changeColorTo('red');
+  pieces.push(mainPiece);
   pieces.push(new Piece(1, 2, 2, 1));
   pieces.push(new Piece(1, 4, 1, 1));
 

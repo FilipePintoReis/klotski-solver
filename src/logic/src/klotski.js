@@ -11,6 +11,7 @@ export const methods = {
   depthLimitedSearch: 'depth-limited-search',
   iterativeDeepening: 'iterative-deepening',
   greedySearch: 'greedy-search',
+  aStar: 'aStar',
 };
 
 /**
@@ -266,7 +267,7 @@ class Klotski {
       case methods.depthFirst:
         return this.depthFirstSearch(board);
       case methods.depthLimitedSearch:
-        return this.depthLimitedSearch(board, 30);
+        return this.depthLimitedSearch(board, 200);
       case methods.iterativeDeepening:
         return this.iterativeDeepeningDFSL(board, 700);
       case methods.greedySearch:
@@ -537,40 +538,46 @@ class Klotski {
     const rootNode = new NodeClass(rootBoard, [rootBoard]);
     let f = rootNode.path.length + complexHeuristic(rootNode.board);
     priorityQueue.enqueue(rootNode, f); // falta aqui o cálculo da heurística
-
+ 
     const visited = [];
-
+ 
     let currNode = priorityQueue.front();
-
     while (!priorityQueue.isEmpty() && !currNode.element.board.hasGameEnded()) {
       currNode = priorityQueue.dequeue();
-
       if (currNode.element.board.hasGameEnded()) {
         this.solved = true;
         this.plays = currNode.element.path;
         return true;
       }
-
-      visited.push(currNode.element.board);
+ 
+      visited.push(currNode.element);
       const childBoards = getAllPossibleBoards(currNode.element.board);
-
+ 
       const childNodes = [];
       for (let i = 0; i < childBoards.length; i += 1) {
         const pathClone = [];
         cloneArrayOfBoards(currNode.element.path, pathClone);
         const childNode = new NodeClass(childBoards[i], pathClone);
-        f = childNode.path.length + simpleHeuristic(childNode.board);
+ 
+        f = childNode.path.length + complexHeuristic(childNode.board);
         childNode.path.push(childBoards[i]);
         childNodes.push(childNode);
       }
-
+ 
       for (let i = 0; i < childNodes.length; i += 1) {
-        if (!visited.includes(childNodes[i])) {
+        let canAdd = true;
+        for (let k = 0; k < visited.length; k += 1) {
+           if (compareBoards(childNodes[i].board, visited[k].board)) {
+          if (!(childNodes[i].path.length < visited[k].path.length)) {
+            canAdd = false;
+          }
+          }
+        }
+        if (canAdd) {
           priorityQueue.enqueue(childNodes[i]);
         }
       }
     }
-
     return false;
   }
 }

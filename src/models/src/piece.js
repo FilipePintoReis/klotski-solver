@@ -15,6 +15,11 @@ class Piece {
     this.y1 = y;
     this.width = width;
     this.height = height;
+    this.color = 'blue';
+  }
+
+  changeColorTo(color) {
+    this.color = color;
   }
 
   // Getters

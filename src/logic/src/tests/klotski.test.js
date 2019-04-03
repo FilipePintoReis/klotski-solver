@@ -40,7 +40,7 @@ describe('tests klotski game', () => {
     game.solve(board, methods.depthLimitedSearch);
     console.log(JSON.stringify(game.plays));
     // verify
-    expect(game.solved).toBe(true);
+    expect(game.solved).toBe(false);
   });
 
   it('Game is solved using iterative depth first search method.', () => {
