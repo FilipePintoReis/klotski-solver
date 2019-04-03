@@ -10,4 +10,6 @@ const createEasyBoard = () => new Board(new Maps.MoveRightToGameOver());
 
 const createTestBoard = () => new Board(new Maps.TestMap());
 
-export { createEasyBoard, createTestBoard };
+const create21Board = () => new Board(new Maps.Easy21());
+
+export { createEasyBoard, createTestBoard, create21Board };

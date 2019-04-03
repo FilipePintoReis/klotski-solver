@@ -4,10 +4,10 @@ import KlotskiMap from './map';
 const generatePieces = () => {
   const pieces = [];
   // 0 row
+  pieces.push(new Piece(0, 1, 2, 2, 'red'));
+  pieces.push(new Piece(0, 2, 1, 2));
+  pieces.push(new Piece(2, 2, 1, 1));
 
-  const mainPiece = new Piece(0, 0, 2, 2);
-  mainPiece.changeColorTo('red');
-  pieces.push(mainPiece);
   return pieces;
 };
 

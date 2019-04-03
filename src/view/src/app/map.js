@@ -3,25 +3,6 @@ import PropTypes from "prop-types";
 import { Container } from "semantic-ui-react";
 import { Stage, Layer, Rect, Line } from "react-konva";
 
-const colors = [
-  "green",
-  "yellow",
-  "blue",
-  "orange",
-  "purple",
-  "gray",
-  "aliceBlue",
-  "azure",
-  "aquamarine",
-  "black",
-  "bisque",
-  "brown",
-  "burlywood",
-  "chocolate",
-  "coral",
-  "cornSilk"
-];
-
 const MULTIPLIER = 55;
 
 class Map extends React.Component {
@@ -82,7 +63,7 @@ class Map extends React.Component {
   renderMap = board => {
     let element = [];
 
-    board.pieces.forEach((piece, index) =>
+    board.pieces.forEach((piece, index) => {
       element.push(
         <Rect
           key={`${index}`}
@@ -90,17 +71,19 @@ class Map extends React.Component {
           y={piece.y1 * MULTIPLIER}
           width={piece.height * MULTIPLIER}
           height={piece.width * MULTIPLIER}
-          fill={colors[index]}
+          fill={piece.color}
           shadowBlur={2}
         />
-      )
-    );
+      );
+    });
 
     return element;
   };
 
   render() {
     const { board } = this.state;
+
+    console.log(board);
 
     return (
       <Container fluid style={{ padding: "2rem" }}>
