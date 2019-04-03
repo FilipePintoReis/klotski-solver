@@ -4,6 +4,10 @@ import GameOverMap from './gameOverMap';
 import KlotskiMap from './map';
 import MoveRightToGameOver from './moveRightToGameOver';
 import TestMap from './testMap';
+import Easy2 from './easy2';
+import Easy21 from './easy21';
+import Easy1 from './easy1';
+import Easy1Mirror from './easy1mirror';
 
 export default {
   Default,
@@ -12,4 +16,8 @@ export default {
   GameOverMap,
   MoveRightToGameOver,
   TestMap,
+  Easy2,
+  Easy21,
+  Easy1,
+  Easy1Mirror,
 };

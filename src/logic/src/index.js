@@ -1,15 +1,23 @@
 import { Board, Maps } from '@klotski/models';
-import Klotski, { getAllPossibleBoards, methods } from './klotski';
+import Klotski, { methods, cloneArrayOfBoards, cloneBoard } from './klotski';
+import removeDuplicates from './removeDuplicates';
 import { createTestBoard, createEasyBoard } from './board';
 
 /* TODO: Remove */
 const testing = () => {
-  const game = new Klotski();
   const map = new Maps.TestMap();
-  const board = new Board(map);
+  const map2 = new Maps.MoveRightToGameOver();
 
-  const allPossibleBoards = getAllPossibleBoards(board);
-  console.log('All pieces that can move and their possible boards:', allPossibleBoards);
+  const board = new Board(map);
+  const board2 = new Board(map2);
+  const boards = [board, board2];
+  const test = [];
+
+  const newBoard = new Board(null);
+  cloneBoard(board, newBoard);
+  cloneArrayOfBoards(boards, test);
+  console.log('Boards: ', boards);
+  console.log('Test: ', test);
 };
 
 testing();
