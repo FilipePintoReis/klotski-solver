@@ -590,6 +590,7 @@ class Klotski {
         if (canAdd) {
           stack.push(nodesAndHeuristics[i]);
           explored.push(nodesAndHeuristics[i]);
+          explored.sort(compareBoardsAndHeuristics);
         }
       }
     }

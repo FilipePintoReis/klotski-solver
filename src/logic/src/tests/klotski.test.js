@@ -45,7 +45,7 @@ describe('tests klotski game', () => {
 
   it('Game is solved using iterative depth first search method.', () => {
     const game = new Klotski();
-    const map = new Maps.Easy21();
+    const map = new Maps.Easy1();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
