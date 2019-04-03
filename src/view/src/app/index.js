@@ -99,6 +99,8 @@ class App extends React.Component {
 
     if (game == null) return null;
 
+    console.log(method, map);
+
     return (
       <Container fluid style={style.body}>
         <Container textAlign="center" style={style.header}>
@@ -118,8 +120,8 @@ class App extends React.Component {
                 Breadth First Search
               </Menu.Item>
               <Menu.Item
-                active={method === methods.depthFirst}
-                onClick={() => this.selectMethod(methods.depthFirst)}
+                active={method === methods.depthFirstSearch}
+                onClick={() => this.selectMethod(methods.depthFirstSearch)}
               >
                 Depth First Search
               </Menu.Item>
