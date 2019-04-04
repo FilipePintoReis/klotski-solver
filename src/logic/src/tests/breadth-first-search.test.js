@@ -1,9 +1,9 @@
 import { Board, Maps } from '@klotski/models';
 import Klotski, { methods } from '../klotski';
 
-it('Game is solved using breadth first method.', async () => {
+it('BFS', async () => {
   const game = new Klotski();
-  const map = new Maps.Easy1();
+  const map = new Maps.Easy2();
   const board = new Board(map);
   // verify game solving condition
   expect(game.solved).toBe(false);
@@ -11,6 +11,7 @@ it('Game is solved using breadth first method.', async () => {
   // solve game
   game.solve(board, methods.breadthFirst);
 
-  // verify
+  // verify  if (game.solved)
+  console.log('Breadth first search worked. Number of steps: ', game.plays.length);
   expect(game.solved).toBe(true);
 });

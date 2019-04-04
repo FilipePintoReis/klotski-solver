@@ -4,11 +4,13 @@ import KlotskiMap from './map';
 const generatePieces = () => {
   const pieces = [];
   // 0 row
-  const mainPiece = new Piece(0, 0, 2, 2, 'red');
-  pieces.push(mainPiece);
+  pieces.push(new Piece(0, 0, 2, 2, 'red'));
+  pieces.push(new Piece(0, 2, 1, 1));
   pieces.push(new Piece(1, 2, 1, 1));
   pieces.push(new Piece(2, 2, 1, 1));
+  pieces.push(new Piece(3, 2, 1, 1));
   pieces.push(new Piece(1, 3, 1, 1));
+  pieces.push(new Piece(2, 3, 1, 1));
 
   return pieces;
 };

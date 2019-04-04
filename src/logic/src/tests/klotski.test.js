@@ -14,9 +14,9 @@ describe('tests klotski game', () => {
     });
   });
 
-  it('Game is solved using depth first search method.', () => {
+  it('DFS', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy2();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
@@ -25,12 +25,13 @@ describe('tests klotski game', () => {
     game.solve(board, methods.depthFirst);
 
     // verify
+    if (game.solved) console.log('Depth first search worked. Number of steps: ', game.plays.length);
     expect(game.solved).toBe(true);
   });
 
-  it('Game is solved using depth first search limited method.', () => {
+  it('DFSL', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy2();
     const board = new Board(map);
 
     // verify game solving condition
@@ -38,36 +39,41 @@ describe('tests klotski game', () => {
 
     // solve game
     game.solve(board, methods.depthLimitedSearch);
-    console.log(JSON.stringify(game.plays));
     // verify
-    expect(game.solved).toBe(false);
+    if (game.solved) console.log('Depth first search limited worked. Number of steps: ', game.plays.length);
+    expect(game.solved).toBe(true);
   });
 
-  it('Game is solved using iterative depth first search method.', () => {
+  it('IDDFS', () => {
     const game = new Klotski();
-    const map = new Maps.TestMap();
+    const map = new Maps.Easy2();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
-    console.log(JSON.stringify(game.plays));
 
     // solve game
     game.solve(board, methods.iterativeDeepening);
     // verify
+    if (game.solved) {
+      console.log(
+        'Iterative Deepening Depth first search worked. Number of steps: ',
+        game.plays.length,
+      );
+    }
     expect(game.solved).toBe(true);
   });
 
-  it('Game is solved using greedy search and simple heuristic.', () => {
+  it('Greedy', () => {
     const game = new Klotski();
-    const map = new Maps.Easy21();
+    const map = new Maps.Easy2();
     const board = new Board(map);
     // verify game solving condition
     expect(game.solved).toBe(false);
 
     // solve game
     game.solve(board, methods.greedySearch);
-    console.log(JSON.stringify(game.plays));
     // verify
+    if (game.solved) console.log('Greedy search worked. Number of steps: ', game.plays.length);
     expect(game.solved).toBe(true);
   });
 });

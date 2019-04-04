@@ -1,9 +1,9 @@
 import { Board, Maps } from '@klotski/models';
 import Klotski, { methods } from '../klotski';
 
-it('Game is solved using a* algorithm.', async () => {
+it('A*', async () => {
   const game = new Klotski();
-  const map = new Maps.Easy21();
+  const map = new Maps.Easy2();
   const board = new Board(map);
   // verify game solving condition
   expect(game.solved).toBe(false);
@@ -12,6 +12,7 @@ it('Game is solved using a* algorithm.', async () => {
   game.solve(board, methods.aStar);
 
   // verify
+  if (game.solved) console.log('A* search worked. Number of steps: ', game.plays.length);
+
   expect(game.solved).toBe(true);
-  console.log(JSON.stringify(game.plays));
 });
