@@ -411,7 +411,9 @@ class Klotski {
     // We'll continue till our Stack gets empty
     while (stack.length > 0) {
       if (depth <= limit) {
+        // Pop the stack and select our current node
         currNode = stack.pop();
+
         // Check if game is over
         if (currNode.board.hasGameEnded()) {
           this.plays = currNode.path;
@@ -439,11 +441,12 @@ class Klotski {
             explored.push(auxBoard);
             child.path.push(auxBoard);
             stack.push(child);
-            depth += 1;
+            depth++;
           }
         }
+      } else {
+        return false;
       }
-      return false;
     }
     return false;
   }
