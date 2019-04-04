@@ -69,8 +69,8 @@ class Map extends React.Component {
           key={`${index}`}
           x={piece.x1 * MULTIPLIER}
           y={piece.y1 * MULTIPLIER}
-          width={piece.height * MULTIPLIER}
-          height={piece.width * MULTIPLIER}
+          width={piece.width * MULTIPLIER}
+          height={piece.height * MULTIPLIER}
           fill={piece.color}
           shadowBlur={2}
         />
@@ -82,8 +82,6 @@ class Map extends React.Component {
 
   render() {
     const { board } = this.state;
-
-    console.log(board);
 
     return (
       <Container fluid style={{ padding: "2rem" }}>
