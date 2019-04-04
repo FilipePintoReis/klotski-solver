@@ -1,6 +1,4 @@
-import {
-  Board, Piece, Queue, NodeClass, LowestPriorityQueue,
-} from '@klotski/models';
+import { Board, Piece, Queue, NodeClass, LowestPriorityQueue } from '@klotski/models';
 import removeDuplicates from './removeDuplicates';
 
 import { comparePieces, compareBoards } from './utils';
@@ -15,6 +13,15 @@ export const methods = {
 };
 
 /**
+ * Creates a piece in a new position
+ * @param {Piece} piece Piece to be moved
+ * @param {number} deltaX DeltaX position, default 0
+ * @param {number} deltaY DeltaY position, default 0
+ * @returns Piece in new position
+ */
+const createPiece = (piece, deltaX = 0, deltaY = 0) => new Piece(piece.x1 + deltaX, piece.y1 + deltaY, piece.width, piece.height, piece.color);
+
+/**
  * Clones the game board
  * @param {Board} board - Board object.
  * @param {Board} newBoard - Board object clone.
@@ -24,14 +31,7 @@ export const cloneBoard = (board, newBoard) => {
   newBoard.width = board.width;
   // Iterate through the pieces and clone board into newBoard
   board.pieces.forEach((pieceInPreviousBoard) => {
-    const piece = new Piece(
-      pieceInPreviousBoard.x1,
-      pieceInPreviousBoard.y1,
-      pieceInPreviousBoard.width,
-      pieceInPreviousBoard.height,
-      pieceInPreviousBoard.color,
-    );
-    newBoard.pieces.push(piece);
+    newBoard.pieces.push(createPiece(pieceInPreviousBoard));
   });
 };
 
@@ -41,46 +41,6 @@ export const cloneArrayOfBoards = (array1, array2) => {
     cloneBoard(board, newBoard);
     array2.push(newBoard);
   });
-};
-
-/**
- * Creates a new piece with the coordinates of piece
- * and moves it left
- * @param {Piece} piece - Piece object to be moved.
- */
-const createLeftPiece = (piece) => {
-  const newPiece = new Piece(piece.x1 - 1, piece.y1, piece.width, piece.height);
-  return newPiece;
-};
-
-/**
- * Creates a new piece with the coordinates of piece
- * and moves it right
- * @param {Piece} piece - Piece object to be moved.
- */
-const createRightPiece = (piece) => {
-  const newPiece = new Piece(piece.x1 + 1, piece.y1, piece.width, piece.height);
-  return newPiece;
-};
-
-/**
- * Creates a new piece with the coordinates of piece
- * and moves it up
- * @param {Piece} piece - Piece object to be moved.
- */
-const createUpPiece = (piece) => {
-  const newPiece = new Piece(piece.x1, piece.y1 - 1, piece.width, piece.height);
-  return newPiece;
-};
-
-/**
- * Creates a new piece with the coordinates of piece
- * and moves it down
- * @param {Piece} piece - Piece object to be moved.
- */
-const createDownPiece = (piece) => {
-  const newPiece = new Piece(piece.x1, piece.y1 + 1, piece.width, piece.height);
-  return newPiece;
 };
 
 /**
@@ -149,16 +109,20 @@ const pathToGoal = (direction, x, y) => {
 
   // Add vertical path to path
   for (i; i < Math.abs(verticalDistance); i += 1) {
-    if (ySign != 0) {
+    if (ySign !== 0) {
       incrementY = (i + 1) * -ySign;
     } else incrementY = i + 1;
-    if (xSign >= 0) path.push([mainPieceX, mainPieceY + incrementY], [mainPieceX + 1, mainPieceY + incrementY]);
-    else path.push([mainPieceX - 1, mainPieceY + incrementY], [mainPieceX, mainPieceY + incrementY]);
+    if (xSign >= 0) {
+      path.push([mainPieceX, mainPieceY + incrementY], [mainPieceX + 1, mainPieceY + incrementY]);
+    } else {
+      path.push([mainPieceX - 1, mainPieceY + incrementY], [mainPieceX, mainPieceY + incrementY]);
+    }
   }
+
   // Add horizontal path to path
 
   for (j; j < Math.abs(horizontalDistance); j += 1) {
-    if (xSign != 0) {
+    if (xSign !== 0) {
       incrementX = (j + 1) * -xSign;
     } else incrementX = j + 1;
     path.push(
@@ -170,8 +134,8 @@ const pathToGoal = (direction, x, y) => {
 };
 
 export const getAllPossibleBoards = (board) => {
-  const totalPossibleBoards = [];
   const possibleBoards = [];
+
   board.pieces.forEach((pieceInBoard) => {
     const pieceMovement = board.canPieceMove(pieceInBoard);
     if (pieceMovement.canMove) {
@@ -181,16 +145,16 @@ export const getAllPossibleBoards = (board) => {
         cloneBoard(board, tempBoard);
         switch (dir) {
           case 'left':
-            newPiece = createLeftPiece(pieceInBoard);
+            newPiece = createPiece(pieceInBoard, -1, 0);
             break;
           case 'right':
-            newPiece = createRightPiece(pieceInBoard);
+            newPiece = createPiece(pieceInBoard, 1, 0);
             break;
           case 'up':
-            newPiece = createUpPiece(pieceInBoard);
+            newPiece = createPiece(pieceInBoard, 0, -1);
             break;
           case 'down':
-            newPiece = createDownPiece(pieceInBoard);
+            newPiece = createPiece(pieceInBoard, 0, +1);
             break;
           default:
             break;
@@ -442,7 +406,7 @@ class Klotski {
             explored.push(auxBoard);
             child.path.push(auxBoard);
             stack.push(child);
-            depth++;
+            depth += 1;
           }
         }
       } else {
@@ -530,7 +494,8 @@ class Klotski {
           stack.push(child);
         }
       }
-      // 5. Then we mark each unexplored node as explored and push it to the Stack (ordered by the lowest heuristic).
+      /* 5. Then we mark each unexplored node as explored and push it to the Stack
+       (ordered by the lowest heuristic). */
     }
     return false;
   }
@@ -553,6 +518,9 @@ class Klotski {
 
     const explored = [currNodeAndHeuristic];
 
+    // create function that clone boards outside loop
+    const functionThatCloneBoards = pathClone => cloneArrayOfBoards(currNodeAndHeuristic.node.path, pathClone);
+
     // We'll continue till our Stack gets empty
     while (stack.length > 0) {
       stack.sort(compareBoardsAndHeuristics);
@@ -573,7 +541,7 @@ class Klotski {
       // 2. Get the heuristic of each node and group {node, heuristic_value}
       edges.forEach((possibleBoard) => {
         const pathClone = [];
-        cloneArrayOfBoards(currNodeAndHeuristic.node.path, pathClone);
+        functionThatCloneBoards(pathClone);
         const node = new NodeClass(possibleBoard, pathClone);
         node.path.push(possibleBoard);
         const f = complexHeuristic(possibleBoard) + node.path.length;
