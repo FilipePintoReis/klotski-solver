@@ -269,7 +269,7 @@ class Klotski {
       case methods.depthLimitedSearch:
         return this.depthLimitedSearch(board, 700);
       case methods.iterativeDeepening:
-        return this.iterativeDeepeningDFSL(board, 2000);
+        return this.iterativeDeepeningDFSL(board, 1000);
       case methods.greedySearch:
         return this.greedySearch(board);
       case methods.aStar:
