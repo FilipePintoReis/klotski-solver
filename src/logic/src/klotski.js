@@ -29,6 +29,7 @@ export const cloneBoard = (board, newBoard) => {
       pieceInPreviousBoard.y1,
       pieceInPreviousBoard.width,
       pieceInPreviousBoard.height,
+      pieceInPreviousBoard.color,
     );
     newBoard.pieces.push(piece);
   });
