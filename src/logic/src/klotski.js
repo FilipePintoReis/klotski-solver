@@ -267,9 +267,9 @@ class Klotski {
       case methods.depthFirst:
         return this.depthFirstSearch(board);
       case methods.depthLimitedSearch:
-        return this.depthLimitedSearch(board, 200);
+        return this.depthLimitedSearch(board, 700);
       case methods.iterativeDeepening:
-        return this.iterativeDeepeningDFSL(board, 700);
+        return this.iterativeDeepeningDFSL(board, 1000);
       case methods.greedySearch:
         return this.greedySearch(board);
       case methods.aStar:
@@ -313,15 +313,21 @@ class Klotski {
       }
 
       for (let i = 0; i < childNodes.length; i += 1) {
-        let bool = false;
+        let canAdd = true;
         for (let k = 0; k < visited.length; k += 1) {
-          const vari = childNodes[i].board;
-          if (compareBoards(vari, visited[k])) {
-            bool = true;
+          if (compareBoards(childNodes[i].board, visited[k])) {
+            canAdd = false;
           }
         }
-        if (!bool) {
-          queue.enqueue(childNodes[i]);
+        if (canAdd) {
+          const pathClone = [];
+          const auxBoard = new Board(null);
+          cloneArrayOfBoards(currNode.path, pathClone);
+          cloneBoard(childNodes[i].board, auxBoard);
+          const child = new NodeClass(auxBoard, pathClone);
+          visited.push(auxBoard);
+          child.path.push(auxBoard);
+          queue.enqueue(child);
         }
       }
     }
@@ -361,26 +367,24 @@ class Klotski {
       // 1. Get all the child nodes.
       const edges = getAllPossibleBoards(currNode.board);
 
-      // 2. We filter out the nodes that have already been explored.
-      for (let i = edges.length - 1; i >= 0; i--) {
-        for (let j = 0; j < explored.length; j++) {
-          if (i == edges.length) i--;
-          if (compareBoards(edges[i], explored[j])) {
-            edges.splice(i, 1);
+      // 2. Ignore already explored nodes and mark the rest as explored
+      for (let i = 0; i < edges.length; i += 1) {
+        let canAdd = true;
+        for (let k = 0; k < explored.length; k += 1) {
+          if (compareBoards(edges[i], explored[k])) {
+            canAdd = false;
           }
         }
-      }
-
-      // 3. Then we mark each unexplored node as explored and push it to the Stack.
-      for (let i = 0; i < edges.length; i += 1) {
-        const pathClone = [];
-        const auxBoard = new Board(null);
-        cloneArrayOfBoards(currNode.path, pathClone);
-        cloneBoard(edges[i], auxBoard);
-        const child = new NodeClass(auxBoard, pathClone);
-        explored.push(auxBoard);
-        child.path.push(auxBoard);
-        stack.push(child);
+        if (canAdd) {
+          const pathClone = [];
+          const auxBoard = new Board(null);
+          cloneArrayOfBoards(currNode.path, pathClone);
+          cloneBoard(edges[i], auxBoard);
+          const child = new NodeClass(auxBoard, pathClone);
+          explored.push(auxBoard);
+          child.path.push(auxBoard);
+          stack.push(child);
+        }
       }
     }
     return false;
@@ -407,30 +411,28 @@ class Klotski {
     // We'll continue till our Stack gets empty
     while (stack.length > 0) {
       if (depth <= limit) {
+        // Pop the stack and select our current node
         currNode = stack.pop();
+
         // Check if game is over
         if (currNode.board.hasGameEnded()) {
           this.plays = currNode.path;
           this.solved = true;
-          console.log('Limited Depth First Search worked!');
           return true;
         }
 
         // 1. Get all the child nodes.
         const edges = getAllPossibleBoards(currNode.board);
 
-        // 2. We filter out the nodes that have already been explored.
-        for (let i = edges.length - 1; i >= 0; i--) {
-          for (let j = 0; j < explored.length; j++) {
-            if (i == edges.length) i--;
-            if (compareBoards(edges[i], explored[j])) {
-              edges.splice(i, 1);
+        // 2. Ignore already explored nodes and mark the rest as explored
+        for (let i = 0; i < edges.length; i += 1) {
+          let canAdd = true;
+          for (let k = 0; k < explored.length; k += 1) {
+            if (compareBoards(edges[i], explored[k])) {
+              canAdd = false;
             }
           }
-        }
-        if (edges.length != 0) {
-          // 3. Then we mark each unexplored node as explored and push it to the Stack.
-          for (let i = 0; i < edges.length; i += 1) {
+          if (canAdd) {
             const pathClone = [];
             const auxBoard = new Board(null);
             cloneArrayOfBoards(currNode.path, pathClone);
@@ -455,13 +457,13 @@ class Klotski {
    * @param {Int} maxDepth  - Max depth of the graph that DFS generates
    */
   iterativeDeepeningDFSL(board, maxDepth) {
-    for (let limit = 0; limit < maxDepth; limit += 1) {
+    let limit = 0;
+    for (limit; limit < maxDepth; limit += 1) {
       if (this.depthLimitedSearch(board, limit)) {
         console.log('Goal found at a depth of ', limit);
         return true;
       }
     }
-
     console.log('Goal not found up to a depth of ', limit);
     return false;
   }
@@ -498,40 +500,40 @@ class Klotski {
       const edges = getAllPossibleBoards(currNode.board);
       const boardsAndHeuristics = [];
 
-      // 2. We filter out the nodes that have already been explored.
-      for (let i = edges.length - 1; i >= 0; i--) {
-        for (let j = 0; j < explored.length; j++) {
-          if (i == edges.length) i--;
-          if (compareBoards(edges[i], explored[j])) {
-            edges.splice(i, 1);
-          }
-        }
-      }
-
-      // 3. Calculate heuristic for each possible board
+      // 2. Calculate heuristic for each possible board
       edges.forEach((possibleBoard) => {
         const h = complexHeuristic(possibleBoard);
         const boardAndHeuristic = { heuristic: h, board: possibleBoard };
         boardsAndHeuristics.push(boardAndHeuristic);
       });
 
-      // 4. Sort by heuristic
+      // 3. Sort by heuristic
       boardsAndHeuristics.sort(compareBoardsAndHeuristics);
 
-      // 5. Then we mark each unexplored node as explored and push it to the Stack (ordered by the lowest heuristic).
+      // 4. Ignore already explored nodes and mark the rest as explored
       for (let i = 0; i < boardsAndHeuristics.length; i += 1) {
-        const pathClone = [];
-        const auxBoard = new Board(null);
-        cloneArrayOfBoards(currNode.path, pathClone);
-        cloneBoard(boardsAndHeuristics[i].board, auxBoard);
-        const child = new NodeClass(auxBoard, pathClone);
-        explored.push(auxBoard);
-        child.path.push(auxBoard);
-        stack.push(child);
+        let canAdd = true;
+        for (let k = 0; k < explored.length; k += 1) {
+          if (compareBoards(boardsAndHeuristics[i].board, explored[k])) {
+            canAdd = false;
+          }
+        }
+        if (canAdd) {
+          const pathClone = [];
+          const auxBoard = new Board(null);
+          cloneArrayOfBoards(currNode.path, pathClone);
+          cloneBoard(boardsAndHeuristics[i].board, auxBoard);
+          const child = new NodeClass(auxBoard, pathClone);
+          explored.push(auxBoard);
+          child.path.push(auxBoard);
+          stack.push(child);
+        }
       }
+      // 5. Then we mark each unexplored node as explored and push it to the Stack (ordered by the lowest heuristic).
     }
     return false;
   }
+
   aStar(board) {
     // Create a Stack and add our initial node in it
     const rootNode = new NodeClass(board, [board]);
@@ -543,7 +545,10 @@ class Klotski {
     const tempBoard = new Board(null);
     cloneBoard(board, tempBoard);
 
-    let currNodeAndHeuristic = { node: new NodeClass(tempBoard, [tempBoard]), heuristic: rootF };
+    let currNodeAndHeuristic = {
+      node: new NodeClass(tempBoard, [tempBoard]),
+      heuristic: rootF,
+    };
 
     const explored = [currNodeAndHeuristic];
 
