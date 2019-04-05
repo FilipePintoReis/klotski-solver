@@ -1,15 +1,21 @@
-import { Board, Piece, Queue, NodeClass, LowestPriorityQueue } from '@klotski/models';
-import removeDuplicates from './removeDuplicates';
+import {
+  Board,
+  Piece,
+  Queue,
+  NodeClass,
+  LowestPriorityQueue
+} from "@klotski/models";
+import removeDuplicates from "./removeDuplicates";
 
-import { comparePieces, compareBoards } from './utils';
+import { comparePieces, compareBoards } from "./utils";
 
 export const methods = {
-  breadthFirst: 'breadth-first',
-  depthFirstSearch: 'depth-first-search',
-  depthLimitedSearch: 'depth-limited-search',
-  iterativeDeepening: 'iterative-deepening',
-  greedySearch: 'greedy-search',
-  aStar: 'aStar',
+  breadthFirst: "breadth-first",
+  depthFirstSearch: "depth-first-search",
+  depthLimitedSearch: "depth-limited-search",
+  iterativeDeepening: "iterative-deepening",
+  greedySearch: "greedy-search",
+  aStar: "aStar"
 };
 
 /**
@@ -19,7 +25,14 @@ export const methods = {
  * @param {number} deltaY DeltaY position, default 0
  * @returns Piece in new position
  */
-const createPiece = (piece, deltaX = 0, deltaY = 0) => new Piece(piece.x1 + deltaX, piece.y1 + deltaY, piece.width, piece.height, piece.color);
+const createPiece = (piece, deltaX = 0, deltaY = 0) =>
+  new Piece(
+    piece.x1 + deltaX,
+    piece.y1 + deltaY,
+    piece.width,
+    piece.height,
+    piece.color
+  );
 
 /**
  * Clones the game board
@@ -30,13 +43,13 @@ export const cloneBoard = (board, newBoard) => {
   newBoard.height = board.height;
   newBoard.width = board.width;
   // Iterate through the pieces and clone board into newBoard
-  board.pieces.forEach((pieceInPreviousBoard) => {
+  board.pieces.forEach(pieceInPreviousBoard => {
     newBoard.pieces.push(createPiece(pieceInPreviousBoard));
   });
 };
 
 export const cloneArrayOfBoards = (array1, array2) => {
-  array1.forEach((board) => {
+  array1.forEach(board => {
     const newBoard = new Board(null);
     cloneBoard(board, newBoard);
     array2.push(newBoard);
@@ -71,7 +84,7 @@ const movePiece = (board, piece, newPiece) => {
  * goal in the format [horizontalDirection, verticalDirection]
  * @param {Board} board - Board obj.
  */
-const simpleHeuristic = (board) => {
+const simpleHeuristic = board => {
   const mainPiece = board.findObjectivePiece();
   const x1 = mainPiece.getX();
   const y1 = mainPiece.getY();
@@ -113,9 +126,15 @@ const pathToGoal = (direction, x, y) => {
       incrementY = (i + 1) * -ySign;
     } else incrementY = i + 1;
     if (xSign >= 0) {
-      path.push([mainPieceX, mainPieceY + incrementY], [mainPieceX + 1, mainPieceY + incrementY]);
+      path.push(
+        [mainPieceX, mainPieceY + incrementY],
+        [mainPieceX + 1, mainPieceY + incrementY]
+      );
     } else {
-      path.push([mainPieceX - 1, mainPieceY + incrementY], [mainPieceX, mainPieceY + incrementY]);
+      path.push(
+        [mainPieceX - 1, mainPieceY + incrementY],
+        [mainPieceX, mainPieceY + incrementY]
+      );
     }
   }
 
@@ -127,33 +146,33 @@ const pathToGoal = (direction, x, y) => {
     } else incrementX = j + 1;
     path.push(
       [mainPieceX + incrementX, mainPieceY + incrementY - 1],
-      [mainPieceX + incrementX, mainPieceY + incrementY],
+      [mainPieceX + incrementX, mainPieceY + incrementY]
     );
   }
   return path;
 };
 
-export const getAllPossibleBoards = (board) => {
+export const getAllPossibleBoards = board => {
   const possibleBoards = [];
 
-  board.pieces.forEach((pieceInBoard) => {
+  board.pieces.forEach(pieceInBoard => {
     const pieceMovement = board.canPieceMove(pieceInBoard);
     if (pieceMovement.canMove) {
-      pieceMovement.moves.forEach((dir) => {
+      pieceMovement.moves.forEach(dir => {
         let newPiece = null;
         const tempBoard = new Board(null);
         cloneBoard(board, tempBoard);
         switch (dir) {
-          case 'left':
+          case "left":
             newPiece = createPiece(pieceInBoard, -1, 0);
             break;
-          case 'right':
+          case "right":
             newPiece = createPiece(pieceInBoard, 1, 0);
             break;
-          case 'up':
+          case "up":
             newPiece = createPiece(pieceInBoard, 0, -1);
             break;
-          case 'down':
+          case "down":
             newPiece = createPiece(pieceInBoard, 0, +1);
             break;
           default:
@@ -174,7 +193,7 @@ export const getAllPossibleBoards = (board) => {
  * to the number of pieces between the main piece and the goal
  * @param {Board} board - Board object.
  */
-const complexHeuristic = (board) => {
+const complexHeuristic = board => {
   const mainPiece = board.findObjectivePiece();
   const x1 = mainPiece.getX();
   const y1 = mainPiece.getY();
@@ -188,7 +207,7 @@ const complexHeuristic = (board) => {
   const distanceToGoal = simpleHeuristic(board);
   let piecesInTheWay = 0;
 
-  board.pieces.forEach((piece) => {
+  board.pieces.forEach(piece => {
     const pieceSquares = piece.getPieceSquares();
     for (let i = 0; i < pieceSquares.length; i += 1) {
       const pieceSquareString = JSON.stringify(pieceSquares[i]);
@@ -229,7 +248,7 @@ class Klotski {
     switch (method) {
       case methods.breadthFirst:
         return this.breadthFirstSearch(board);
-      case methods.depthFirst:
+      case methods.depthFirstSearch:
         return this.depthFirstSearch(board);
       case methods.depthLimitedSearch:
         return this.depthLimitedSearch(board, 700);
@@ -240,7 +259,7 @@ class Klotski {
       case methods.aStar:
         return this.aStar(board);
       default:
-        return false;
+        return this.breadthFirstSearch(board);
     }
   }
 
@@ -425,11 +444,11 @@ class Klotski {
     let limit = 0;
     for (limit; limit < maxDepth; limit += 1) {
       if (this.depthLimitedSearch(board, limit)) {
-        console.log('Goal found at a depth of ', limit);
+        console.log("Goal found at a depth of ", limit);
         return true;
       }
     }
-    console.log('Goal not found up to a depth of ', limit);
+    console.log("Goal not found up to a depth of ", limit);
     return false;
   }
 
@@ -466,7 +485,7 @@ class Klotski {
       const boardsAndHeuristics = [];
 
       // 2. Calculate heuristic for each possible board
-      edges.forEach((possibleBoard) => {
+      edges.forEach(possibleBoard => {
         const h = complexHeuristic(possibleBoard);
         const boardAndHeuristic = { heuristic: h, board: possibleBoard };
         boardsAndHeuristics.push(boardAndHeuristic);
@@ -513,13 +532,14 @@ class Klotski {
 
     let currNodeAndHeuristic = {
       node: new NodeClass(tempBoard, [tempBoard]),
-      heuristic: rootF,
+      heuristic: rootF
     };
 
     const explored = [currNodeAndHeuristic];
 
     // create function that clone boards outside loop
-    const functionThatCloneBoards = pathClone => cloneArrayOfBoards(currNodeAndHeuristic.node.path, pathClone);
+    const functionThatCloneBoards = pathClone =>
+      cloneArrayOfBoards(currNodeAndHeuristic.node.path, pathClone);
 
     // We'll continue till our Stack gets empty
     while (stack.length > 0) {
@@ -539,7 +559,7 @@ class Klotski {
       const nodesAndHeuristics = [];
 
       // 2. Get the heuristic of each node and group {node, heuristic_value}
-      edges.forEach((possibleBoard) => {
+      edges.forEach(possibleBoard => {
         const pathClone = [];
         functionThatCloneBoards(pathClone);
         const node = new NodeClass(possibleBoard, pathClone);
@@ -554,8 +574,18 @@ class Klotski {
       for (let i = 0; i < nodesAndHeuristics.length; i += 1) {
         let canAdd = true;
         for (let k = 0; k < explored.length; k += 1) {
-          if (compareBoards(nodesAndHeuristics[i].node.board, explored[k].node.board)) {
-            if (!(nodesAndHeuristics[i].node.path.length < explored[k].node.path.length)) {
+          if (
+            compareBoards(
+              nodesAndHeuristics[i].node.board,
+              explored[k].node.board
+            )
+          ) {
+            if (
+              !(
+                nodesAndHeuristics[i].node.path.length <
+                explored[k].node.path.length
+              )
+            ) {
               canAdd = false;
             }
           }
