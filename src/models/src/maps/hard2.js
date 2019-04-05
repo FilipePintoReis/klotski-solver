@@ -1,11 +1,11 @@
-import Piece from '../piece';
-import KlotskiMap from './map';
+import Piece from "../piece";
+import KlotskiMap from "./map";
 
 const generatePieces = () => {
   const pieces = [];
   // 0 row
 
-  const mainPiece = new Piece(1, 0, 2, 2, 'red');
+  const mainPiece = new Piece(1, 0, 2, 2, "red");
   pieces.push(mainPiece);
 
   pieces.push(new Piece(0, 0, 1, 1));
@@ -13,8 +13,10 @@ const generatePieces = () => {
   pieces.push(new Piece(3, 0, 1, 1));
   pieces.push(new Piece(3, 1, 1, 1));
 
-  pieces.push(new Piece(0, 2, 1, 2));
-  pieces.push(new Piece(3, 2, 1, 2));
+  pieces.push(new Piece(0, 2, 1, 1));
+  pieces.push(new Piece(0, 3, 1, 1));
+  pieces.push(new Piece(3, 2, 1, 1));
+  pieces.push(new Piece(3, 3, 1, 1));
 
   pieces.push(new Piece(1, 2, 1, 1));
   pieces.push(new Piece(1, 3, 1, 1));
@@ -26,11 +28,11 @@ const generatePieces = () => {
   return pieces;
 };
 
-class Hard extends KlotskiMap {
+class Hard2 extends KlotskiMap {
   constructor() {
     // create default blocks
     super(generatePieces());
   }
 }
 
-export default Hard;
+export default Hard2;

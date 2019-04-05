@@ -4,8 +4,10 @@ import Klotski, {
   methods,
   createEasyBoard,
   createTestBoard,
+  createTest2Board,
   create21Board,
-  createHardBoard
+  createHardBoard,
+  createHard2Board
 } from "@klotski/logic";
 import {
   Container,
@@ -21,8 +23,10 @@ import Map from "./map";
 const maps = {
   easyMap: "easyMap",
   test: "test",
+  test2: "test2",
   easy21: "easy21",
-  hard: "hard"
+  hard: "hard",
+  hard2: "hard2"
 };
 
 const style = {
@@ -87,11 +91,17 @@ class App extends React.Component {
       case maps.test:
         board = createTestBoard();
         break;
+      case maps.test2:
+        board = createTest2Board();
+        break;
       case maps.easy21:
         board = create21Board();
         break;
       case maps.hard:
         board = createHardBoard();
+        break;
+      case maps.hard2:
+        board = createHard2Board();
         break;
       default:
         break;
@@ -170,22 +180,34 @@ class App extends React.Component {
                   Easy
                 </Menu.Item>
                 <Menu.Item
-                  active={map === maps.test}
-                  onClick={() => this.selectMap(maps.test)}
-                >
-                  Map 1
-                </Menu.Item>
-                <Menu.Item
                   active={map === maps.easy21}
                   onClick={() => this.selectMap(maps.easy21)}
                 >
-                  Map 2
+                  Easy v2
+                </Menu.Item>
+                <Menu.Item
+                  active={map === maps.test}
+                  onClick={() => this.selectMap(maps.test)}
+                >
+                  Normal
+                </Menu.Item>
+                <Menu.Item
+                  active={map === maps.test2}
+                  onClick={() => this.selectMap(maps.test2)}
+                >
+                  Normal v2
                 </Menu.Item>
                 <Menu.Item
                   active={map === maps.hard}
                   onClick={() => this.selectMap(maps.hard)}
                 >
-                  Map 3
+                  Hard
+                </Menu.Item>
+                <Menu.Item
+                  active={map === maps.hard2}
+                  onClick={() => this.selectMap(maps.hard2)}
+                >
+                  Hard v2
                 </Menu.Item>
               </Menu>
 
@@ -195,7 +217,7 @@ class App extends React.Component {
                   onClick={() => this.runSearch(method)}
                   disabled={method == null || map == null}
                 >
-                  ` Run Search
+                  Run Search
                 </Button>
               ) : loading ? (
                 <ReactLoading

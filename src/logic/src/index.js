@@ -1,9 +1,14 @@
-import { Board, Maps } from '@klotski/models';
-import Klotski, { methods, cloneArrayOfBoards, cloneBoard } from './klotski';
-import removeDuplicates from './removeDuplicates';
+import { Board, Maps } from "@klotski/models";
+import Klotski, { methods, cloneArrayOfBoards, cloneBoard } from "./klotski";
+import removeDuplicates from "./removeDuplicates";
 import {
-  createTestBoard, createEasyBoard, create21Board, createHardBoard,
-} from './board';
+  createTestBoard,
+  createEasyBoard,
+  create21Board,
+  createHardBoard,
+  createHard2Board,
+  createTest2Board
+} from "./board";
 
 /* TODO: Remove */
 const testing = () => {
@@ -18,8 +23,8 @@ const testing = () => {
   const newBoard = new Board(null);
   cloneBoard(board, newBoard);
   cloneArrayOfBoards(boards, test);
-  console.log('Boards: ', boards);
-  console.log('Test: ', test);
+  console.log("Boards: ", boards);
+  console.log("Test: ", test);
 };
 
 testing();
@@ -27,7 +32,13 @@ testing();
 /* exports */
 
 export {
-  methods, createEasyBoard, createTestBoard, create21Board, createHardBoard,
+  methods,
+  createEasyBoard,
+  createTestBoard,
+  createTest2Board,
+  create21Board,
+  createHardBoard,
+  createHard2Board
 };
 
 export default Klotski;
