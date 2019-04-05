@@ -1,14 +1,14 @@
 {
-  "main.js": "/klotski-solver/static/js/main.f19f7363.chunk.js",
-  "main.js.map": "/klotski-solver/static/js/main.f19f7363.chunk.js.map",
+  "main.js": "/klotski-solver/static/js/main.b6a53079.chunk.js",
+  "main.js.map": "/klotski-solver/static/js/main.b6a53079.chunk.js.map",
   "runtime~main.js": "/klotski-solver/static/js/runtime~main.9c7645db.js",
   "runtime~main.js.map": "/klotski-solver/static/js/runtime~main.9c7645db.js.map",
-  "static/css/2.d17ad732.chunk.css": "/klotski-solver/static/css/2.d17ad732.chunk.css",
-  "static/js/2.39afa173.chunk.js": "/klotski-solver/static/js/2.39afa173.chunk.js",
-  "static/js/2.39afa173.chunk.js.map": "/klotski-solver/static/js/2.39afa173.chunk.js.map",
+  "static/css/2.bd0332fc.chunk.css": "/klotski-solver/static/css/2.bd0332fc.chunk.css",
+  "static/js/2.ac17bd65.chunk.js": "/klotski-solver/static/js/2.ac17bd65.chunk.js",
+  "static/js/2.ac17bd65.chunk.js.map": "/klotski-solver/static/js/2.ac17bd65.chunk.js.map",
   "index.html": "/klotski-solver/index.html",
-  "precache-manifest.f6814bab88d70b953c38c3c45574b208.js": "/klotski-solver/precache-manifest.f6814bab88d70b953c38c3c45574b208.js",
+  "precache-manifest.d4e3bc1225c1e60219acd375e20da70a.js": "/klotski-solver/precache-manifest.d4e3bc1225c1e60219acd375e20da70a.js",
   "service-worker.js": "/klotski-solver/service-worker.js",
-  "static/css/2.d17ad732.chunk.css.map": "/klotski-solver/static/css/2.d17ad732.chunk.css.map",
+  "static/css/2.bd0332fc.chunk.css.map": "/klotski-solver/static/css/2.bd0332fc.chunk.css.map",
   "static/media/semantic.min.css": "/klotski-solver/static/media/outline-icons.ef60a4f6.woff"
 }
